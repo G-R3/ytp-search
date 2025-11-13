@@ -18,6 +18,26 @@ export type Item = {
         width: string;
         height: string;
       };
+      high?: {
+        url: string;
+        width: string;
+        height: string;
+      };
+      maxres?: {
+        url: string;
+        width: string;
+        height: string;
+      };
+      medium?: {
+        url: string;
+        width: string;
+        height: string;
+      };
+      standard?: {
+        url: string;
+        width: string;
+        height: string;
+      };
     };
   };
 };

@@ -56,11 +56,11 @@ function App() {
                   key={item.id}
                   className="border rounded-md overflow-hidden"
                 >
-                  {item.snippet.thumbnails.default?.url ? (
+                  {item.snippet.thumbnails.high?.url ? (
                     <img
-                      src={item.snippet.thumbnails.default.url}
-                      width={item.snippet.thumbnails.default.width}
-                      height={item.snippet.thumbnails.default.height}
+                      src={item.snippet.thumbnails.high.url}
+                      width={item.snippet.thumbnails.high.width}
+                      height={item.snippet.thumbnails.high.height}
                       alt={item.snippet.title}
                     />
                   ) : (

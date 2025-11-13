@@ -62,9 +62,7 @@ const getPlaylistItems = async (playlistId: string) => {
           kind: item.snippet.resourceId.kind,
           videoId: item.snippet.resourceId.videoId,
         },
-        thumbnails: {
-          default: item.snippet.thumbnails.default,
-        },
+        thumbnails: item.snippet.thumbnails,
       },
     }));
 
