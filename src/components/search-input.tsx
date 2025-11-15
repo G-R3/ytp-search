@@ -22,7 +22,7 @@ export const SearchInput = ({ onSearch }: SearchProps) => {
       onChange={(e) => setSearch(e.target.value)}
       placeholder="Search playlist..."
       className={clsx(
-        "px-3 py-1 text-sm h-10 text-neutral-300 bg-neutral-800 rounded-lg focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
+        "px-3 py-1 text-sm h-10 text-neutral-300 bg-neutral-900 rounded-lg focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
       )}
     />
   );

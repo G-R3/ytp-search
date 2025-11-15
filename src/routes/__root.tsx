@@ -35,7 +35,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="bg-neutral-900 text-neutral-50">
+      <body
+        className="bg-neutral-950 text-neutral-50"
+        style={{
+          backgroundImage: `radial-gradient(circle, oklch(0.2 0 0) 1.5px, transparent 1.5px)`,
+          backgroundSize: "25px 25px",
+        }}
+      >
         <main className="max-w-6xl mx-auto">{children}</main>
         <TanStackDevtools
           config={{

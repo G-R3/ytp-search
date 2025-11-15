@@ -61,7 +61,7 @@ function App() {
             type="url"
             placeholder="Enter public or unlisted playlist URL"
             className={clsx(
-              "flex-1 px-3 py-1 text-sm h-10 text-neutral-300 bg-neutral-800 rounded-lg focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
+              "flex-1 px-3 py-1 text-sm h-10 text-neutral-300 bg-neutral-900 rounded-lg focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
             )}
             onChange={(e) => {
               if (!e.target.value.trim()) {
@@ -77,7 +77,7 @@ function App() {
           <button
             disabled={isDisabled}
             className={clsx(
-              "px-3 py-1 text-sm h-10 bg-neutral-800 rounded-lg text-neutral-300 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
+              "px-3 py-1 text-sm h-10 bg-neutral-900 rounded-lg text-neutral-300 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
               {
                 "disabled:opacity-50 disabled:cursor-not-allowed": isDisabled,
               },
@@ -120,13 +120,15 @@ function App() {
       {playlist && (
         <div className="flex flex-col gap-2 mt-8">
           <h2 className="text-2xl tracking-tight">{playlist.name}</h2>
-          <span>{playlist.description}</span>
+          <span className="text-sm tracking-wide text-neutral-400">
+            {playlist.description}
+          </span>
 
           {/* <span>
           {playlist.publishedAt}
           </span> */}
 
-          <span className="text-xs text-neutral-400 text-right">
+          <span className="text-xs text-neutral-500 text-right">
             {playlist.items.length} videos
           </span>
 
