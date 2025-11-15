@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState, useTransition } from "react";
 import clsx from "clsx";
 import type { Playlist } from "@/types/youtube";
-import { getPlaylist } from "@/lib/youtube";
+import { extractYoutubeId, getPlaylist } from "@/lib/youtube";
 import { SearchInput } from "@/components/search-input";
 
 export const Route = createFileRoute("/")({ component: App });
@@ -83,9 +83,14 @@ function App() {
               },
             )}
             onClick={() => {
+              setError("");
               startTransition(async () => {
                 try {
-                  const { meta, items } = await getPlaylist(url);
+                  const playlistId = extractYoutubeId(url);
+
+                  if (!playlistId) return;
+
+                  const { meta, items } = await getPlaylist(playlistId);
                   const itemPlaylist = {
                     name: meta.items[0].snippet.title,
                     publishedAt: meta.items[0].snippet.publishedAt,

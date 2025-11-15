@@ -83,3 +83,24 @@ export async function getPlaylist(playlistId: string) {
 
   return { meta, items };
 }
+
+export const extractYoutubeId = (input: string) => {
+  const trimmed = input.trim();
+
+  if (!trimmed.includes("youtube.com") && !trimmed.includes("youtu.be")) {
+    return trimmed;
+  }
+
+  try {
+    const url = new URL(trimmed);
+    const listParam = url.searchParams.get("list");
+
+    if (listParam) {
+      return listParam;
+    }
+  } catch {
+    return trimmed;
+  }
+
+  return null;
+};
