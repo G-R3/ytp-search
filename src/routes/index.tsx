@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useEffect, useRef, useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import clsx from "clsx";
 import type { Playlist } from "@/types/youtube";
 import { getPlaylist } from "@/lib/youtube";
+import { SearchInput } from "@/components/search-input";
 
 export const Route = createFileRoute("/")({ component: App });
 
@@ -11,12 +12,12 @@ function App() {
   const [search, setSearch] = useState("");
   const [url, setUrl] = useState("PLEjXiMSBSC2D2OTbGejKTEB7htFbkaEqZ");
   const [playlist, setPlaylist] = useState<Playlist | null>(null);
+  const [error, setError] = useState("");
   const playlistRef = useRef<Playlist | null>(null);
 
   const isDisabled = isPending || !url.trim().length;
 
   const handleSearch = (query: string) => {
-    console.log("HERE");
     if (!playlist || !playlistRef.current) return;
 
     setSearch(query);
@@ -52,54 +53,63 @@ function App() {
     });
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      handleSearch(search);
-    }, 300); // 300ms debounce
-
-    return () => clearTimeout(timer);
-  }, [search, handleSearch]);
-
   return (
     <div className="min-h-screen p-8">
-      <div className="flex gap-2">
-        <input
-          type="url"
-          placeholder="Enter public or unlisted playlist URL"
-          className={clsx(
-            "flex-1 px-3 py-1 text-sm h-10 text-neutral-300 bg-neutral-800 rounded-lg focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-          )}
-          onChange={(e) => setUrl(e.target.value)}
-          value={url}
-          autoComplete="off"
-        />
+      <div>
+        <div className="flex gap-2">
+          <input
+            type="url"
+            placeholder="Enter public or unlisted playlist URL"
+            className={clsx(
+              "flex-1 px-3 py-1 text-sm h-10 text-neutral-300 bg-neutral-800 rounded-lg focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
+            )}
+            onChange={(e) => {
+              if (!e.target.value.trim()) {
+                setError("");
+              }
 
-        <button
-          disabled={isDisabled}
-          className={clsx(
-            "px-3 py-1 text-sm h-10 bg-neutral-800 rounded-lg text-neutral-300 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-            {
-              "disabled:opacity-50 disabled:cursor-not-allowed": isDisabled,
-            },
-          )}
-          onClick={() => {
-            startTransition(async () => {
-              const { meta, items } = await getPlaylist(url);
-              const itemPlaylist = {
-                name: meta.items[0].snippet.title,
-                publishedAt: meta.items[0].snippet.publishedAt,
-                description: meta.items[0].snippet.description,
-                items,
-              };
+              setUrl(e.target.value);
+            }}
+            value={url}
+            autoComplete="off"
+          />
 
-              setPlaylist(itemPlaylist);
-              // playlistRef.current = itemPlaylist;
-              playlistRef.current = itemPlaylist;
-            });
-          }}
-        >
-          Load playlist
-        </button>
+          <button
+            disabled={isDisabled}
+            className={clsx(
+              "px-3 py-1 text-sm h-10 bg-neutral-800 rounded-lg text-neutral-300 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
+              {
+                "disabled:opacity-50 disabled:cursor-not-allowed": isDisabled,
+              },
+            )}
+            onClick={() => {
+              startTransition(async () => {
+                try {
+                  const { meta, items } = await getPlaylist(url);
+                  const itemPlaylist = {
+                    name: meta.items[0].snippet.title,
+                    publishedAt: meta.items[0].snippet.publishedAt,
+                    description: meta.items[0].snippet.description,
+                    items,
+                  };
+
+                  setPlaylist(itemPlaylist);
+                  playlistRef.current = itemPlaylist;
+                } catch {
+                  setError(
+                    "An error occurred while loading the playlist. Make sure your playlist is public or unlisted",
+                  );
+                  setPlaylist(null);
+                }
+              });
+            }}
+          >
+            Load playlist
+          </button>
+        </div>
+        {error && (
+          <span className="text-xs text-red-400 font-medium">{error}</span>
+        )}
       </div>
 
       {playlist && (
@@ -114,15 +124,8 @@ function App() {
           <span className="text-xs text-neutral-400 text-right">
             {playlist.items.length} videos
           </span>
-          <input
-            value={search}
-            // onChange={(e) => handleSearch(e.target.value)}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search playlist..."
-            className={clsx(
-              "px-3 py-1 text-sm h-10 text-neutral-300 bg-neutral-800 rounded-lg focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-            )}
-          />
+
+          <SearchInput onSearch={handleSearch} />
 
           <div className="grid grid-cols-4 gap-4 mt-4">
             {playlist.items.map((item) => {
