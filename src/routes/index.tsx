@@ -1,22 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useRef, useState, useTransition } from "react";
-import clsx from "clsx";
+import { useRef, useState } from "react";
 import type { Playlist } from "@/types/youtube";
-import { extractYoutubeId, getPlaylist } from "@/lib/youtube";
 import { SearchInput } from "@/components/search-input";
 import { PlaylistInput } from "@/components/playlist-input";
 
 export const Route = createFileRoute("/")({ component: App });
 
 function App() {
-  const [isPending, startTransition] = useTransition();
   const [search, setSearch] = useState("");
-  const [url, setUrl] = useState("PLEjXiMSBSC2D2OTbGejKTEB7htFbkaEqZ");
   const [playlist, setPlaylist] = useState<Playlist | null>(null);
-  const [error, setError] = useState("");
   const playlistRef = useRef<Playlist | null>(null);
-
-  const isDisabled = isPending || !url.trim().length;
 
   const handleSearch = (query: string) => {
     if (!playlist || !playlistRef.current) return;
