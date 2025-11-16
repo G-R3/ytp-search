@@ -43,7 +43,6 @@ const getPlaylistItems = async (playlistId: string) => {
     }
 
     const data = await response.json();
-    console.log("THE DATA", data);
 
     if (!data.items.length) break;
 

@@ -98,7 +98,9 @@ function App() {
                     <div>No Thumbnail found</div>
                   )}
                   <div className="px-2 py-1 flex-1 flex flex-col">
-                    <p>{item.snippet.title}</p>
+                    <p title={item.snippet.title} className="line-clamp-2">
+                      {item.snippet.title}
+                    </p>
                     <p className="mt-auto text-sm text-neutral-300">
                       by
                       <span> {item.snippet.videoOwnerChannelTitle}</span>
