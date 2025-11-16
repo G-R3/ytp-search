@@ -4,6 +4,7 @@ import clsx from "clsx";
 import type { Playlist } from "@/types/youtube";
 import { extractYoutubeId, getPlaylist } from "@/lib/youtube";
 import { SearchInput } from "@/components/search-input";
+import { PlaylistInput } from "@/components/playlist-input";
 
 export const Route = createFileRoute("/")({ component: App });
 
@@ -55,69 +56,14 @@ function App() {
 
   return (
     <div className="min-h-screen p-8">
-      <div>
-        <div className="flex gap-2">
-          <input
-            type="url"
-            placeholder="Enter public or unlisted playlist URL"
-            className={clsx(
-              "flex-1 px-3 py-1 text-sm h-10 text-neutral-300 bg-neutral-900 rounded-lg focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-            )}
-            onChange={(e) => {
-              if (!e.target.value.trim()) {
-                setError("");
-              }
+      <PlaylistInput
+        onSubmit={(playlistItems: Playlist) => {
+          setPlaylist(playlistItems);
+          playlistRef.current = playlistItems;
+        }}
+      />
 
-              setUrl(e.target.value);
-            }}
-            value={url}
-            autoComplete="off"
-          />
-
-          <button
-            disabled={isDisabled}
-            className={clsx(
-              "px-3 py-1 text-sm h-10 bg-neutral-900 rounded-lg text-neutral-300 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-neutral-800",
-              {
-                "disabled:opacity-50 disabled:cursor-not-allowed": isDisabled,
-              },
-            )}
-            onClick={() => {
-              setError("");
-              startTransition(async () => {
-                try {
-                  const playlistId = extractYoutubeId(url);
-
-                  if (!playlistId) return;
-
-                  const { meta, items } = await getPlaylist(playlistId);
-                  const itemPlaylist = {
-                    name: meta.items[0].snippet.title,
-                    publishedAt: meta.items[0].snippet.publishedAt,
-                    description: meta.items[0].snippet.description,
-                    items,
-                  };
-
-                  setPlaylist(itemPlaylist);
-                  playlistRef.current = itemPlaylist;
-                } catch {
-                  setError(
-                    "An error occurred while loading the playlist. Make sure your playlist is public or unlisted",
-                  );
-                  setPlaylist(null);
-                }
-              });
-            }}
-          >
-            Load playlist
-          </button>
-        </div>
-        {error && (
-          <span className="text-xs text-red-400 font-medium">{error}</span>
-        )}
-      </div>
-
-      {playlist && (
+      {playlist ? (
         <div className="flex flex-col gap-2 mt-8">
           <h2 className="text-2xl tracking-tight">{playlist.name}</h2>
           <span className="text-sm tracking-wide text-neutral-400">
@@ -164,6 +110,10 @@ function App() {
               );
             })}
           </div>
+        </div>
+      ) : (
+        <div className="flex items-center justify-center h-40 mt-40">
+          <p className="text-neutral-400">Load a playlist to start searching</p>
         </div>
       )}
     </div>
