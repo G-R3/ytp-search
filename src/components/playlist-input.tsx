@@ -78,9 +78,11 @@ export const PlaylistInput = ({ onSubmit }: PlaylistInputProps) => {
           Load playlist
         </button>
       </div>
-      {error && (
-        <span className="text-xs text-red-400 font-medium">{error}</span>
-      )}
+      <div className="min-h-[24px]">
+        {error && (
+          <span className="text-xs text-red-400 font-medium">{error}</span>
+        )}
+      </div>
     </form>
   );
 };
