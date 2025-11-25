@@ -64,8 +64,7 @@ function App() {
               YouTube Playlist Search
             </h1>
             <p className="text-neutral-400 text-center max-w-lg text-lg">
-              Filter, search, and explore your favorite playlists with lightning
-              speed.
+              Search and filter your favorite playlists.
             </p>
           </div>
 
