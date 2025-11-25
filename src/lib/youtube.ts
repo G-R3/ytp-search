@@ -46,6 +46,7 @@ const getPlaylistItems = async (playlistId: string) => {
 
     if (!data.items.length) break;
 
+    console.log("DATA", data);
     // TODO: filter out deleted videos
     const items = (data.items as Array<Item>).map((item) => ({
       id: item.id,
