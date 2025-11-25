@@ -1,7 +1,7 @@
+import { ArrowRight, Link, Loader2 } from "lucide-react";
 import { useState, useTransition } from "react";
 import clsx from "clsx";
 import type { FormEvent } from "react";
-import { Link, Loader2, ArrowRight } from "lucide-react";
 import type { Playlist } from "@/types/youtube";
 import { extractYoutubeId, getPlaylist } from "@/lib/youtube";
 
@@ -55,7 +55,7 @@ export const PlaylistInput = ({ onSubmit }: PlaylistInputProps) => {
           <div className="absolute left-3 text-neutral-500 pointer-events-none transition-colors group-focus-within:text-neutral-300">
             <Link size={16} />
           </div>
-          
+
           <input
             type="url"
             placeholder="Paste YouTube playlist URL..."
@@ -64,7 +64,7 @@ export const PlaylistInput = ({ onSubmit }: PlaylistInputProps) => {
               "text-sm text-neutral-200 placeholder:text-neutral-600",
               "focus:outline-none focus:border-neutral-600 focus:ring-1 focus:ring-neutral-600",
               "transition-all duration-200 ease-in-out",
-              "hover:border-neutral-700"
+              "hover:border-neutral-700",
             )}
             onChange={(e) => {
               if (!e.target.value.trim()) setError("");
@@ -82,7 +82,7 @@ export const PlaylistInput = ({ onSubmit }: PlaylistInputProps) => {
                 "h-full px-4 flex items-center gap-2 rounded-lg text-xs font-medium transition-all duration-200",
                 isDisabled
                   ? "bg-neutral-800 text-neutral-500 cursor-not-allowed"
-                  : "bg-white text-black hover:bg-neutral-200 active:scale-95"
+                  : "bg-white text-black hover:bg-neutral-200 active:scale-95",
               )}
             >
               {isPending ? (
@@ -100,11 +100,13 @@ export const PlaylistInput = ({ onSubmit }: PlaylistInputProps) => {
           </div>
         </div>
       </form>
-      
-      <div className={clsx(
-        "mt-2 text-center transition-all duration-300 overflow-hidden",
-        error ? "opacity-100 max-h-10" : "opacity-0 max-h-0"
-      )}>
+
+      <div
+        className={clsx(
+          "mt-2 text-center transition-all duration-300 overflow-hidden",
+          error ? "opacity-100 max-h-10" : "opacity-0 max-h-0",
+        )}
+      >
         <span className="text-xs text-red-400 font-medium bg-red-400/10 px-3 py-1 rounded-full">
           {error}
         </span>
