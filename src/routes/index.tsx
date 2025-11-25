@@ -28,15 +28,22 @@ function App() {
       return;
     }
 
-    const lowerSearch = search.toLowerCase();
+    const lowerSearch = query.toLowerCase();
 
     const filtered = playlistRef.current.items.filter((item) => {
-      const titleMatch = item.snippet.title.toLowerCase().includes(lowerSearch);
+      const titleMatch = item.snippet.title
+        ? item.snippet.title.toLowerCase().includes(lowerSearch)
+        : false;
+      const descriptionMatch = item.snippet.description
+        ? item.snippet.description.toLowerCase().includes(lowerSearch)
+        : false;
       const channelMatch = item.snippet.videoOwnerChannelTitle
-        .toLowerCase()
-        .includes(lowerSearch);
+        ? item.snippet.videoOwnerChannelTitle
+            .toLowerCase()
+            .includes(lowerSearch)
+        : false;
 
-      return titleMatch || channelMatch;
+      return titleMatch || channelMatch || descriptionMatch;
     });
 
     setPlaylist({

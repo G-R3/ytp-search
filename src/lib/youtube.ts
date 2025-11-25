@@ -71,8 +71,6 @@ const getPlaylistItems = async (playlistId: string) => {
     allItems.push(...items);
   } while (nextPageToken);
 
-  console.log("RETURNING ITEMS", allItems);
-
   // const seenVideoIds = new Set();
   // const uniqueVideos = allItems.filter((item) => {
   //   if (seenVideoIds.has(item.snippet.resourceId.videoId)) {
