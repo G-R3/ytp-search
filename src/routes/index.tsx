@@ -53,7 +53,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-neutral-200 selection:bg-white/10 font-sans">
+    <div className="min-h-screen text-neutral-200 selection:bg-white/10 font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
         <header className="flex flex-col items-center justify-center mb-16 space-y-8">
           <div className="flex flex-col items-center space-y-4">
@@ -77,7 +77,7 @@ function App() {
         </header>
 
         {playlist ? (
-          <main className="space-y-8 animate-slide-in-up">
+          <main className="space-y-8 animate-slide-in-up ">
             <div className="flex flex-col md:flex-row gap-8 items-start justify-between bg-neutral-900/30 p-6 rounded-2xl border border-neutral-800/50">
               <div className="space-y-2 flex-1">
                 <h2 className="text-2xl font-semibold text-white tracking-tight">
