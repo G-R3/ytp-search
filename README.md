@@ -1,1 +1,6 @@
-You ever just randomly remember the name of some video you wanted to watch or rewatch? Then you go find the 500+ video playlist you saved it to and realize you’ll have to scroll for minutes to find it because YouTube still doesn't have playlist search? No? Just me?
+I randomly remember the name of some youtube video I remember saving to one of my playlists. Excited to rewatch the BANGER video, i go to my 500+ video playlist 
+only to realize youtube does not have a playlist search feature.....
+
+so instead of scrolling for 5 minutes, I spent about 6 days building this tool to search my playlist instead.
+
+
